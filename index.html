@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Beehive Reputation — Leave a Review</title>
+  <meta name="robots" content="noindex, nofollow" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #1a1a2e;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 16px;
+      padding: 48px 40px;
+      max-width: 480px;
+      width: 100%;
+      text-align: center;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+    }
+    .bee-icon { font-size: 48px; margin-bottom: 16px; }
+    h1 {
+      font-size: 24px;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin-bottom: 8px;
+    }
+    .business-name {
+      font-size: 20px;
+      color: #f5a623;
+      font-weight: 600;
+      margin-bottom: 16px;
+    }
+    p {
+      font-size: 15px;
+      color: #555;
+      line-height: 1.6;
+      margin-bottom: 32px;
+    }
+    .stars {
+      font-size: 36px;
+      margin-bottom: 24px;
+      letter-spacing: 4px;
+    }
+    .cta-btn {
+      display: inline-block;
+      background: #f5a623;
+      color: #fff;
+      font-size: 16px;
+      font-weight: 700;
+      padding: 16px 32px;
+      border-radius: 8px;
+      text-decoration: none;
+      transition: background 0.2s;
+      width: 100%;
+    }
+    .cta-btn:hover { background: #e09512; }
+    .footer {
+      margin-top: 32px;
+      font-size: 12px;
+      color: #999;
+    }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="bee-icon">🐝</div>
+    <h1>How did we do?</h1>
+    <div class="business-name" id="bizName">Loading...</div>
+    <div class="stars">⭐⭐⭐⭐⭐</div>
+    <p>Your review takes less than 60 seconds and means the world to our team. Tap the button below to share your experience on Google.</p>
+    <a href="#" class="cta-btn" id="reviewBtn">Leave Us a Google Review →</a>
+    <div class="footer">Powered by Beehive Reputation Management</div>
+  </div>
+
+  <script>
+    // Client config lookup table
+    // Format: slug -> { name, googleUrl }
+    const clients = {
+      "tnlandtitle": {
+        name: "TN Land Title",
+        googleUrl: "GOOGLE_REVIEW_URL_PLACEHOLDER"
+      }
+    };
+
+    // Read slug from URL path: /r/tnlandtitle
+    const slug = window.location.pathname.replace(/^\/r\//, '').replace(/\/$/, '').toLowerCase();
+    const client = clients[slug];
+
+    if (client && client.googleUrl !== "GOOGLE_REVIEW_URL_PLACEHOLDER") {
+      document.getElementById('bizName').textContent = client.name;
+      document.getElementById('reviewBtn').href = client.googleUrl;
+      // Auto-redirect after 2 seconds for clean UX
+      setTimeout(() => { window.location.href = client.googleUrl; }, 2000);
+    } else if (client) {
+      // Placeholder — Google URL not yet set
+      document.getElementById('bizName').textContent = client.name;
+      document.getElementById('reviewBtn').textContent = 'Review link coming soon';
+      document.getElementById('reviewBtn').style.background = '#ccc';
+    } else {
+      document.getElementById('bizName').textContent = 'This Business';
+      document.getElementById('reviewBtn').textContent = 'Invalid review link';
+      document.getElementById('reviewBtn').style.background = '#ccc';
+    }
+  </script>
+</body>
+</html>
